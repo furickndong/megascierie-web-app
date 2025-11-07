@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>📄 Lettres automatiques - MegaScierie</title>
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #006241;
+      --secondary: #00a86b;
+      --bg-light: #f6f8fa;
+      --text-dark: #333;
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ===== BARRE LATÉRALE ===== */
+    .sidebar {
+      width: 250px;
+      background: var(--primary);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--secondary) var(--primary);
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background-color: var(--secondary);
+      border-radius: 4px;
+    }
+
+    .sidebar .logo {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+    }
+
+    .sidebar nav ul li {
+      margin: 0.5rem 0;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar nav ul li:hover,
+    .sidebar nav ul li.active {
+      background: var(--secondary);
+    }
+
+    .sidebar nav ul li a {
+      color: white;
+      text-decoration: none;
+      flex: 1;
+    }
+
+    /* ===== CONTENU PRINCIPAL ===== */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    header h1 {
+      color: var(--primary);
+      font-size: 1.5rem;
+    }
+
+    header .user {
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    /* ===== FORMULAIRE ===== */
+    .form-section {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .form-section h2 {
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    select, textarea, button {
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 0.95rem;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    button {
+      grid-column: span 2;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: var(--secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ======= BARRE LATÉRALE ======= -->
+  <aside class="sidebar">
+    <h2 class="logo">🪵 MegaScierie</h2>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">🏠 Tableau de bord</a></li>
+        <li><a href="saisie_grume.html">🌲 Saisie de grumes</a></li>
+        <li><a href="transport_grumes.html">🚚 Transport de grumes</a></li>
+        <li><a href="transport_debites.html">🚛 Transport de débités</a></li>
+        <li><a href="production.html">🪚 Production scierie</a></li>
+        <li><a href="stocks.html">📦 Stocks</a></li>
+        <li><a href="facturation.html">💰 Facturation</a></li>
+        <li><a href="rapports.html">📄 Rapports</a></li>
+        <li class="active"><a href="lettres.html">📑 Lettres automatiques</a></li>
+        <li><a href="transit.html">🚦 Ordres de transit</a></li>
+        <li><a href="contrats.html">📜 Contrats & parcelles</a></li>
+        <li><a href="programme.html">📆 Programme annuel</a></li>
+        <li><a href="declarations.html">🧾 Déclarations mensuelles</a></li>
+        <li><a href="parametres.html">⚙️ Paramètres</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ======= CONTENU PRINCIPAL ======= -->
+  <section class="main">
+    <header>
+      <h1>📄 Lettres automatiques</h1>
+      <p class="user">👤 Administrateur</p>
+    </header>
+
+    <div class="form-section">
+      <h2>Génération automatique de lettres</h2>
+      <form method="POST" action="lettres.php">
+        <div>
+          <label for="type_lettre">Choisir le type de lettre :</label>
+          <select id="type_lettre" name="type_lettre" required>
+            <option value="">-- Sélectionnez un type --</option>
+            <option value="documentaire">Lettre documentaire</option>
+            <option value="client">Lettre client</option>
+            <option value="client_direct">Lettre client direct</option>
+            <option value="fax">Lettre par fax</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="contenu">Contenu personnalisé (facultatif) :</label>
+          <textarea id="contenu" name="contenu" rows="6" placeholder="Saisissez un message ou une note spécifique..."></textarea>
+        </div>
+
+        <button type="submit">📤 Générer la lettre</button>
+      </form>
+    </div>
+  </section>
+</body>
+</html>

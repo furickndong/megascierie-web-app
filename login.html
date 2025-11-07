@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaScierie | Connexion</title>
+<style>
+  :root {
+    --primary: #006d3b;
+    --secondary: #00a86b;
+    --light: #f5f8f6;
+    --white: #fff;
+    --dark: #222;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+  }
+
+  .login-container {
+    background: var(--white);
+    padding: 2.5rem 3rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    width: 380px;
+    text-align: center;
+    position: relative;
+  }
+
+  .login-container h1 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  .login-container .logo {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .form-group {
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  label {
+    font-weight: 600;
+    color: var(--dark);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: 0.3s;
+  }
+
+  input:focus {
+    border-color: var(--secondary);
+    outline: none;
+    box-shadow: 0 0 4px rgba(0,168,107,0.3);
+  }
+
+  button {
+    width: 100%;
+    padding: 0.8rem;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: 600;
+    margin-top: 0.5rem;
+  }
+
+  button:hover {
+    background: var(--secondary);
+    transform: translateY(-2px);
+  }
+
+  .footer {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .footer a {
+    color: var(--secondary);
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .footer a:hover {
+    text-decoration: underline;
+  }
+
+  .error {
+    color: red;
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="login-container">
+    <div class="logo">🪵</div>
+    <h1>MegaScierie</h1>
+
+    <?php if (!empty($erreur)): ?>
+      <p class="error"><?= $erreur ?></p>
+    <?php endif; ?>
+
+    <form method="POST" action="">
+      <div class="form-group">
+        <label for="utilisateur">Nom d’utilisateur</label>
+        <input type="text" id="utilisateur" name="utilisateur" placeholder="Entrez votre nom d’utilisateur" required>
+      </div>
+      <div class="form-group">
+        <label for="motdepasse">Mot de passe</label>
+        <input type="password" id="motdepasse" name="motdepasse" placeholder="Entrez votre mot de passe" required>
+      </div>
+      <button type="submit">Se connecter</button>
+    </form>
+
+    <div class="footer">
+      <p>© 2025 MegaScierie. Tous droits réservés.</p>
+    </div>
+  </div>
+
+</body>
+</html>

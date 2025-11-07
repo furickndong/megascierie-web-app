@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MegaScierie | Transport de grumes</title>
+  <style>
+    /* ===== VARIABLES ===== */
+    :root {
+      --primary: #006241;
+      --secondary: #00a86b;
+      --bg-light: #f6f8fa;
+      --text-dark: #333;
+      --white: #fff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      background: var(--bg-light);
+      height: 100vh;
+      color: var(--text-dark);
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 250px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar ul li {
+      margin-bottom: 1rem;
+      padding: 0.7rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .sidebar ul li:hover,
+    .sidebar ul li.active {
+      background: var(--secondary);
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem 2rem;
+    }
+
+    header {
+      background: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    header h1 {
+      color: var(--primary);
+    }
+
+    .user {
+      font-weight: bold;
+      color: var(--primary);
+    }
+
+    /* ===== FORM SECTION ===== */
+    .form-section {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      margin-bottom: 2rem;
+    }
+
+    .form-section h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      grid-column: span 2;
+      background: var(--primary);
+      color: var(--white);
+      padding: 0.9rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: var(--secondary);
+    }
+
+    /* ===== TABLE SECTION ===== */
+    .table-section {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background: var(--primary);
+      color: white;
+    }
+
+    tr:hover {
+      background: #f3f3f3;
+    }
+
+    .actions button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .actions button:hover {
+      color: var(--secondary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <h2 class="logo">🪵 MegaScierie</h2>
+    <ul>
+      <li><a href="dashboard.html">🏠 Tableau de bord</a></li>
+      <li><a href="saisie_grumes.html">🌲 Saisie de grumes</a></li>
+      <li class="active">🚚 Transport de grumes</li>
+      <li><a href="production.html">🪚 Production</a></li>
+      <li><a href="stocks.html">📦 Stocks</a></li>
+      <li><a href="facturation.html">💰 Facturation</a></li>
+      <li><a href="rapports.html">📄 Rapports</a></li>
+      <li><a href="parametres.html">⚙️ Paramètres</a></li>
+    </ul>
+  </aside>
+
+  <!-- ===== MAIN ===== -->
+  <section class="main">
+    <header>
+      <h1>🚚 Transport de grumes</h1>
+      <p class="user">👤 Administrateur</p>
+    </header>
+
+    <div class="form-section">
+      <h2>Nouvel envoi de grumes</h2>
+      <form>
+        <div>
+          <label>Numéro du transport</label>
+          <input type="text" placeholder="Ex: TRG-001">
+        </div>
+        <div>
+          <label>Chauffeur</label>
+          <input type="text" placeholder="Nom du chauffeur">
+        </div>
+        <div>
+          <label>Camion</label>
+          <input type="text" placeholder="Ex: TG-4589">
+        </div>
+        <div>
+          <label>Point de départ</label>
+          <input type="text" placeholder="Ex: Camp 3 - Makokou">
+        </div>
+        <div>
+          <label>Destination</label>
+          <input type="text" placeholder="Ex: Scierie Libreville">
+        </div>
+        <div>
+          <label>Date de départ</label>
+          <input type="date">
+        </div>
+        <div>
+          <label>Date d’arrivée</label>
+          <input type="date">
+        </div>
+        <div>
+          <label>Statut</label>
+          <select>
+            <option>En cours</option>
+            <option>Livré</option>
+            <option>En retard</option>
+          </select>
+        </div>
+        <button type="submit">✅ Enregistrer le transport</button>
+      </form>
+    </div>
+
+    <div class="table-section">
+      <h2>📋 Liste des transports</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Numéro</th>
+            <th>Chauffeur</th>
+            <th>Camion</th>
+            <th>Départ</th>
+            <th>Destination</th>
+            <th>Date départ</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>TRG-001</td>
+            <td>Jean Mba</td>
+            <td>TR-245</td>
+            <td>Makokou</td>
+            <td>Libreville</td>
+            <td>11/10/2025</td>
+            <td>En cours</td>
+            <td class="actions">
+              <button>✏️</button>
+              <button>🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</body>
+</html>

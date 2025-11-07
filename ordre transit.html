@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MegaScierie | Ordre de transit</title>
+  <style>
+    :root { --primary: #006241; --secondary: #00a86b; --bg-light: #f6f8fa; --text-dark: #333; --white: #fff; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+    body { display: flex; background: var(--bg-light); color: var(--text-dark); height: 100vh; overflow: hidden; }
+    .sidebar { width: 250px; background: var(--primary); color: var(--white); display: flex; flex-direction: column; padding: 1rem; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--secondary) var(--primary); }
+    .sidebar::-webkit-scrollbar { width: 6px; }
+    .sidebar::-webkit-scrollbar-thumb { background-color: var(--secondary); border-radius: 4px; }
+    .sidebar .logo { font-size: 1.5rem; text-align: center; margin-bottom: 1.5rem; font-weight: bold; }
+    .sidebar nav ul { list-style: none; }
+    .sidebar nav ul li { margin: 0.5rem 0; padding: 0.6rem 0.8rem; border-radius: 8px; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 0.5rem; }
+    .sidebar nav ul li:hover, .sidebar nav ul li.active { background: var(--secondary); }
+    .sidebar nav ul li a { color: white; text-decoration: none; flex: 1; }
+    .main { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
+    header { display: flex; justify-content: space-between; align-items: center; background: var(--white); padding: 1rem 2rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 1.5rem; position: sticky; top: 0; z-index: 10;}
+    header h1 { color: var(--primary); font-size: 1.5rem; }
+    header .user { font-weight: bold; color: var(--primary); }
+    .form-section { background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); margin-bottom: 2rem;}
+    .form-section h2 { margin-bottom: 1rem; color: var(--primary);}
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;}
+    label { font-weight: 600; color: #444; margin-bottom: 0.3rem; display: block;}
+    input, select, textarea { padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; width: 100%; font-size: .95rem;}
+    button { grid-column: span 2; background: var(--primary); color: white; border: none; padding: 0.9rem; border-radius: 8px; font-size: 1rem; cursor: pointer; transition: 0.3s;}
+    button:hover { background: var(--secondary);}
+    .table-section { background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: 0 3px 10px rgba(0,0,0,0.05);}
+    .table-section h2 { color: var(--primary); margin-bottom: 1rem;}
+    table { width: 100%; border-collapse: collapse;}
+    th, td { padding: 0.8rem; text-align: left; border-bottom: 1px solid #eee;}
+    th { background: var(--primary); color: white;}
+    tr:hover { background: #f3f3f3;}
+    .actions button { background: transparent; border: none; cursor: pointer; font-size: 1.1rem;}
+    .actions button:hover { color: var(--secondary);}
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <h2 class="logo">🪵 MegaScierie</h2>
+    <nav>
+      <ul>
+        <li><a href="dashboard.html">🏠 Tableau de bord</a></li>
+        <li><a href="saisie_grume.html">🌲 Saisie de grumes</a></li>
+        <li><a href="transport_grumes.html">🚚 Transport de grumes</a></li>
+        <li><a href="transport_debites.html">🚛 Transport de débités</a></li>
+        <li><a href="production.html">🪚 Production scierie</a></li>
+        <li><a href="stocks.html">📦 Stocks</a></li>
+        <li><a href="facturation.html">💰 Facturation</a></li>
+        <li><a href="rapports.html">📄 Rapports</a></li>
+        <li><a href="lettres.html">📑 Lettres automatiques</a></li>
+        <li class="active">🚦 Ordres de transit</li>
+        <li><a href="contrats.html">📜 Contrats & parcelles</a></li>
+        <li><a href="programme.html">📆 Programme annuel</a></li>
+        <li><a href="declarations.html">🧾 Déclarations mensuelles</a></li>
+        <li><a href="parametres.html">⚙️ Paramètres</a></li>
+      </ul>
+    </nav>
+  </aside>
+  <section class="main">
+    <header>
+      <h1>🚦 Ordre de transit</h1>
+      <p class="user">👤 Administrateur</p>
+    </header>
+
+    <div class="form-section">
+      <h2>Nouvel ordre de transit</h2>
+      <form action="ordre_transit.php" method="POST">
+        <div>
+          <label for="date_transit">Date de transit</label>
+          <input type="date" name="date_transit" id="date_transit" required>
+        </div>
+        <div>
+          <label for="type_transit">Type de transit</label>
+          <select name="type_transit" id="type_transit" required>
+            <option value="grume">Grume</option>
+            <option value="debite">Produit débité</option>
+          </select>
+        </div>
+        <div>
+          <label for="grume_id">ID grume (si grume)</label>
+          <input type="number" name="grume_id" id="grume_id" placeholder="Ex: 21">
+        </div>
+        <div>
+          <label for="debite_id">ID débité (si débité)</label>
+          <input type="number" name="debite_id" id="debite_id" placeholder="Ex: 102">
+        </div>
+        <div>
+          <label for="quantite">Quantité (m³ ou nombre)</label>
+          <input type="number" step="0.01" name="quantite" id="quantite" required placeholder="Ex: 15.25">
+        </div>
+        <div>
+          <label for="destination">Destination</label>
+          <input type="text" name="destination" id="destination" required placeholder="Ex: Port Libreville">
+        </div>
+        <div>
+          <label for="statut">Statut</label>
+          <select name="statut" id="statut">
+            <option value="préparé">Préparé</option>
+            <option value="en cours">En cours</option>
+            <option value="livré">Livré</option>
+            <option value="annulé">Annulé</option>
+          </select>
+        </div>
+        <div>
+          <label for="conducteur">Conducteur</label>
+          <input type="text" name="conducteur" id="conducteur" placeholder="Ex: M. Owono">
+        </div>
+        <div>
+          <label for="vehicule">Véhicule</label>
+          <input type="text" name="vehicule" id="vehicule" placeholder="Ex: CAM-22">
+        </div>
+        <div>
+          <label for="observations">Observations</label>
+          <textarea name="observations" id="observations" rows="2" placeholder="Notes diverses"></textarea>
+        </div>
+        <button type="submit">✅ Enregistrer ordre de transit</button>
+      </form>
+    </div>
+
+    <div class="table-section">
+      <h2>📋 Liste des ordres de transit</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date transit</th>
+            <th>Type</th>
+            <th>ID grume</th>
+            <th>ID débite</th>
+            <th>Quantité</th>
+            <th>Destination</th>
+            <th>Statut</th>
+            <th>Conducteur</th>
+            <th>Véhicule</th>
+            <th>Observations</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>2025-11-07</td>
+            <td>debite</td>
+            <td></td>
+            <td>102</td>
+            <td>14.70</td>
+            <td>Port Libreville</td>
+            <td>en cours</td>
+            <td>M. Owono</td>
+            <td>CAM-22</td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</body>
+</html>

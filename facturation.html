@@ -1,0 +1,242 @@
+<!DOCTYPE html> 
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MegaScierie | Facturation</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <style>
+    :root{
+  --primary: #006d3b;
+  --secondary: #00a86b;
+  --light-bg: #f5f8f6;
+  --white: #ffffff;
+  --text-dark: #222;
+  --muted: #666;
+}
+
+/* Reset léger */
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+
+/* Layout général */
+body{
+  display:flex;
+  min-height:100vh;
+  background:var(--light-bg);
+  color:var(--text-dark);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* ===== NAV / SIDEBAR ===== */
+nav{
+  width:250px;
+  background:var(--primary);
+  color:var(--white);
+  display:flex;
+  flex-direction:column;
+  padding:1.5rem;
+  height:100vh;
+  overflow-y:auto;
+  gap:0.25rem;
+}
+
+nav h2{
+  text-align:center;
+  font-size:1.5rem;
+  margin-bottom:1rem;
+  line-height:1.2;
+}
+
+nav a{
+  color:var(--white);
+  text-decoration:none;
+  padding:0.75rem 0.9rem;
+  display:block;
+  border-radius:8px;
+  margin-bottom:0.3rem;
+  transition:background .18s ease, transform .12s ease;
+  font-weight:600;
+}
+
+nav a:hover{ background: rgba(0,168,107,0.12); transform: translateX(4px); }
+nav a.active{ background:var(--secondary); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02); }
+
+/* ===== MAIN ===== */
+main{
+  flex:1;
+  padding:2rem;
+  overflow-y:auto;
+}
+
+/* Header */
+header{
+  background:var(--white);
+  padding:1rem 1.25rem;
+  border-radius:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  margin-bottom:1.5rem;
+}
+
+header h1{ color:var(--primary); font-size:1.4rem; }
+header .user{ color:var(--primary); font-weight:700; }
+
+/* Card principal */
+.card{
+  background:var(--white);
+  border-radius:12px;
+  padding:1.5rem;
+  box-shadow:0 2px 8px rgba(0,0,0,0.06);
+}
+
+.card h2{
+  color:var(--primary);
+  border-bottom:2px solid var(--secondary);
+  padding-bottom:0.5rem;
+  margin-bottom:0.75rem;
+}
+
+/* Boutons */
+.btn{
+  display:inline-block;
+  background:var(--primary);
+  color:var(--white);
+  padding:0.6rem 0.9rem;
+  border-radius:8px;
+  text-decoration:none;
+  font-weight:700;
+  margin-top:1rem;
+  transition:background .18s ease, transform .12s ease;
+}
+
+.btn:hover{ background:var(--secondary); transform:translateY(-2px); }
+
+/* ===== TABLEAU ===== */
+table.facture-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:1rem;
+  font-size:0.95rem;
+}
+
+.facture-table thead th{
+  background:var(--primary);
+  color:var(--white);
+  text-transform:uppercase;
+  font-size:0.85rem;
+  padding:0.75rem 0.9rem;
+  letter-spacing:0.02em;
+  text-align:left;
+}
+
+.facture-table tbody td{
+  padding:0.7rem 0.9rem;
+  border-bottom:1px solid #eee;
+  vertical-align:middle;
+  color:var(--text-dark);
+}
+
+.facture-table tbody tr:hover{
+  background:#f8fcf9;
+}
+
+/* small muted text */
+.muted{ color:var(--muted); font-size:0.88rem; }
+
+/* Responsive adjustments */
+@media (max-width: 980px){
+  nav{ width:200px; padding:1rem; }
+  header{ flex-direction:column; gap:0.6rem; align-items:flex-start; }
+}
+
+@media (max-width: 720px){
+  body{ flex-direction:column; }
+  nav{
+    width:100%;
+    height:auto;
+    flex-direction:row;
+    gap:0.5rem;
+    overflow-x:auto;
+    padding:0.75rem;
+  }
+  nav a{ white-space:nowrap; margin-bottom:0; padding:0.6rem 0.8rem; }
+  main{ padding:1rem; }
+  .card{ padding:1rem; }
+  .facture-table thead{ display:none; }
+  .facture-table, .facture-table tbody, .facture-table tr, .facture-table td{
+    display:block;
+    width:100%;
+  }
+  .facture-table tr{ margin-bottom:0.75rem; border-radius:8px; background:var(--white); box-shadow:0 1px 4px rgba(0,0,0,0.03); padding:0.8rem; }
+  .facture-table td{ padding:0.35rem 0.5rem; border-bottom:none; }
+  .facture-table td:before{
+    content: attr(data-label);
+    display:block;
+    font-weight:700;
+    color:var(--muted);
+    margin-bottom:0.25rem;
+    font-size:0.85rem;
+  }
+}
+
+    
+  </style>
+
+
+  <!-- ===== BARRE LATÉRALE ===== -->
+  <nav>
+    <h2>🪵 MegaScierie</h2>
+    <a href="transport_de_grumes.html">🚛 Transport Grumes</a>
+    <a href="transport_de_debites.html">🚚 Transport Débités</a>
+    <a href="stocks.html">📦 Stocks</a>
+    <a href="facturation.php" class="active">💰 Facturation</a>
+    <a href="rapports.html">📄 Rapports</a>
+    <a href="lettres.html">📑 Lettres Auto.</a>
+    <a href="ordres_transit.html">🚦 Ordres Transit</a>
+    <a href="contrats.html">📜 Contrats</a>
+    <a href="programme_annuel.html">📆 Programme Annuel</a>
+    <a href="declarations.html">🧾 Déclarations</a>
+  </nav>
+
+  <!-- ===== CONTENU PRINCIPAL ===== -->
+  <main>
+    <header>
+      <h1>💰 Facturation</h1>
+      <p class="user">👤 Administrateur</p>
+    </header>
+
+    <div class="card">
+      <h2>Liste des Factures</h2>
+      <p>Voici les factures enregistrées dans le système MegaScierie.</p>
+
+      <!-- Tableau dynamique -->
+      <table class="facture-table">
+        <thead>
+          <tr>
+            <th>Numéro</th>
+            <th>Date</th>
+            <th>Montant Total</th>
+            <th>TVA</th>
+            <th>Remise</th>
+            <th>Mode de Paiement</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody id="facture-data">
+          <!-- Les lignes seront insérées par facturation.php -->
+        </tbody>
+      </table>
+
+      <div class="actions">
+        <a href="nouvelle_facture.html" class="btn">➕ Nouvelle facture</a>
+      </div>
+    </div>
+  </main>
+
+</body>
+</html>

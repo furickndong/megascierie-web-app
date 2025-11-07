@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MegaScierie | Transport de débités</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: #f5f7f6;
+      display: flex;
+    }
+    .sidebar {
+      width: 240px;
+      background: #064420;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding-top: 20px;
+      box-shadow: 3px 0 10px rgba(0, 0, 0, 0.2);
+    }
+    .sidebar h2 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 30px;
+      color: #e3fcec;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      padding: 12px 20px;
+    }
+    .sidebar a, .sidebar li {
+      color: #eaf7ee;
+      text-decoration: none;
+      display: block;
+      border-radius: 8px;
+    }
+    .sidebar a:hover, .sidebar li.active {
+      background: #0b6b36;
+      color: white;
+      font-weight: bold;
+    }
+    .main {
+      margin-left: 240px;
+      padding: 30px;
+      flex: 1;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    }
+    header h1 {
+      color: #064420;
+      margin: 0;
+    }
+    .user {
+      font-weight: bold;
+      color: #0b6b36;
+    }
+    .form-section, .table-section {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+    form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    form div {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #064420;
+    }
+    input, select {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      outline: none;
+    }
+    button {
+      grid-column: span 2;
+      background: #0b6b36;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #098b4a;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+    th, td {
+      text-align: left;
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+    }
+    th {
+      background: #e3fcec;
+      color: #064420;
+    }
+    tr:hover {
+      background: #f9fdfb;
+    }
+    .actions button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <aside class="sidebar">
+    <h2>🪵 MegaScierie</h2>
+    <ul>
+      <li><a href="index.html">🏠 Tableau de bord</a></li>
+      <li><a href="saisie_grumes.html">🌲 Saisie des grumes</a></li>
+      <li class="active">🚛 Transport de débités</li>
+      <li><a href="stocks.html">📦 Stocks</a></li>
+      <li><a href="facturation.html">💰 Facturation</a></li>
+      <li><a href="rapports.html">📄 Rapports</a></li>
+      <li><a href="lettres.html">📑 Lettres automatiques</a></li>
+      <li><a href="transit.html">🚦 Ordres de transit</a></li>
+      <li><a href="contrats.html">📜 Contrats</a></li>
+      <li><a href="programme.html">📆 Programme annuel</a></li>
+      <li><a href="declarations.html">🧾 Déclarations mensuelles</a></li>
+    </ul>
+  </aside>
+
+  <section class="main">
+    <header>
+      <h1>🚛 Transport de débités</h1>
+      <p class="user">👤 Logisticien</p>
+    </header>
+
+    <!-- Formulaire aligné avec la table transport -->
+    <div class="form-section">
+      <h2>Nouvelle opération de transport</h2>
+      <form action="transport_debite.php" method="POST">
+        <div>
+          <label>Numéro de transport</label>
+          <input type="text" name="numero_transport" required placeholder="Ex: TRD-001">
+        </div>
+        <div>
+          <label>Date du transport</label>
+          <input type="date" name="date_transport" required>
+        </div>
+        <div>
+          <label>Chauffeur</label>
+          <input type="text" name="chauffeur" placeholder="Nom du chauffeur">
+        </div>
+        <div>
+          <label>Immatriculation</label>
+          <input type="text" name="immatriculation" placeholder="Ex: TG-4589">
+        </div>
+        <div>
+          <label>Point de départ</label>
+          <input type="text" name="point_depart" placeholder="Ex: Makokou">
+        </div>
+        <div>
+          <label>Destination</label>
+          <input type="text" name="destination" placeholder="Ex: Libreville">
+        </div>
+        <div>
+          <label>Type de produit</label>
+          <input type="text" name="type_produit" placeholder="Ex: Planches Okoumé">
+        </div>
+        <div>
+          <label>Volume transporté (m³)</label>
+          <input type="number" name="volume_transporte" step="0.01" placeholder="Ex: 12.50">
+        </div>
+        <div>
+          <label>Date de départ</label>
+          <input type="date" name="date_depart">
+        </div>
+        <div>
+          <label>Date d’arrivée</label>
+          <input type="date" name="date_arrivee">
+        </div>
+        <div>
+          <label>Statut</label>
+          <select name="statut">
+            <option value="en cours">En cours</option>
+            <option value="livré">Livré</option>
+            <option value="annulé">Annulé</option>
+          </select>
+        </div>
+        <button type="submit">✅ Enregistrer le transport</button>
+      </form>
+    </div>
+
+    <!-- Tableau des transports -->
+    <div class="table-section">
+      <h2>📋 Liste des transports</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Numéro</th>
+            <th>Produit</th>
+            <th>Volume (m³)</th>
+            <th>Départ</th>
+            <th>Destination</th>
+            <th>Date départ</th>
+            <th>Date arrivée</th>
+            <th>Chauffeur</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>TRD-001</td>
+            <td>Planches Okoumé</td>
+            <td>15.30</td>
+            <td>Makokou</td>
+            <td>Libreville</td>
+            <td>20/10/2025</td>
+            <td>22/10/2025</td>
+            <td>Jean Mba</td>
+            <td>En cours</td>
+            <td class="actions">
+              <button>✏️</button>
+              <button>🗑️</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</body>
+</html>

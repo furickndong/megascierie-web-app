@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MegaScierie | Tableau de bord</title>
+
+  <style>
+    :root {
+      --primary: #006241;
+      --secondary: #00a86b;
+      --accent: #cde8e0;
+      --bg-light: #f4f7f6;
+      --text-dark: #333;
+      --white: #fff;
+      --shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    }
+
+    [data-theme="dark"] {
+      --primary: #00a86b;
+      --secondary: #007d4d;
+      --accent: #003b2a;
+      --bg-light: #181818;
+      --text-dark: #eaeaea;
+      --white: #222;
+      --shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      height: 100vh;
+      transition: 0.3s;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: 260px;
+      background: var(--primary);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem 1rem;
+      overflow-y: auto;
+      box-shadow: var(--shadow);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      letter-spacing: 0.5px;
+    }
+
+    nav ul {
+      list-style: none;
+    }
+
+    nav ul li {
+      margin: 0.6rem 0;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    nav ul li a {
+      color: var(--white);
+      text-decoration: none;
+      display: block;
+      padding: 0.8rem 1rem;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    nav ul li:hover,
+    nav ul li.active {
+      background: var(--secondary);
+    }
+
+    /* ===== MAIN ===== */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+
+    header {
+      background: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    header h1 {
+      color: var(--primary);
+      font-size: 1.6rem;
+    }
+
+    .controls button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      margin-left: 0.5rem;
+      transition: 0.3s;
+    }
+
+    .controls button:hover {
+      background: var(--secondary);
+    }
+
+    /* ===== CARDS ===== */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 1.7rem;
+      box-shadow: var(--shadow);
+      transition: 0.3s ease-in-out;
+      cursor: pointer;
+      border-top: 4px solid var(--secondary);
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      background: var(--accent);
+    }
+
+    .card h2 {
+      color: var(--primary);
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .card p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--secondary);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+    <h2 class="logo">🪵 MegaScierie</h2>
+    <nav>
+      <ul>
+        <li class="active"><a href="index.html">🏠 Tableau de bord</a></li>
+        <li><a href="saisie_grumes.html">🌲 Saisie de grumes</a></li>
+        <li><a href="transport_grumes.html">🚛 Transport de grumes</a></li>
+        <li><a href="transport_debites.html">🚚 Transport de débités</a></li>
+        <li><a href="production.html">🪚 Production</a></li>
+        <li><a href="stocks.html">📦 Stocks</a></li>
+        <li><a href="facturation.html">💰 Facturation</a></li>
+        <li><a href="rapports.html">📊 Rapports</a></li>
+        <li><a href="lettres.html">📄 Lettres automatiques</a></li>
+        <li><a href="ordres_transit.html">🚦 Ordres de transit</a></li>
+        <li><a href="contrats.html">🧾 Contrats</a></li>
+        <li><a href="programme.html">📅 Programme annuel</a></li>
+        <li><a href="declarations.html">🗓️ Déclarations mensuelles</a></li>
+        <li><a href="lettre.php">Lettres automatiques</a></li>
+        <li><a href="parametres.html">⚙️ Paramètres</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <section class="main">
+    <header>
+      <h1>🏠 Tableau de bord</h1>
+      <div class="controls">
+        <button onclick="exportPDF()">📤 Exporter PDF</button>
+        <button onclick="toggleTheme()">🌗 Mode clair/sombre</button>
+      </div>
+    </header>
+
+    <div class="cards">
+      <div class="card">
+        <h2>🌲 Saisie de grumes</h2>
+        <p>Suivez le nombre total de grumes enregistrées et leur état de traitement.</p>
+      </div>
+
+      <div class="card">
+        <h2>🚛 Transport de grumes</h2>
+        <p>Consultez les détails des grumes en transit entre les sites.</p>
+      </div>
+
+      <div class="card">
+        <h2>🪚 Production scierie</h2>
+        <p>Analysez les volumes débités et la performance de la scierie.</p>
+      </div>
+
+      <div class="card">
+        <h2>📦 Gestion des stocks</h2>
+        <p>Visualisez les niveaux de stock des grumes, débités et produits finis.</p>
+      </div>
+
+      <div class="card">
+        <h2>💰 Facturation clients</h2>
+        <p>Suivez les paiements, soldes et factures en attente.</p>
+      </div>
+
+      <div class="card">
+        <h2>📊 Rapports & statistiques</h2>
+        <p>Générez des rapports mensuels et de production personnalisés.</p>
+      </div>
+
+      <div class="card">
+        <h2>📄 Lettres automatiques</h2>
+        <p>Créez et envoyez automatiquement les documents administratifs.</p>
+      </div>
+
+      <div class="card">
+        <h2>🚦 Ordres de transit</h2>
+        <p>Suivez et gérez les ordres de transit pour les lots expédiés.</p>
+      </div>
+
+      <div class="card">
+        <h2>🧾 Contrats</h2>
+        <p>Gérez les contrats clients et les clauses de production.</p>
+      </div>
+
+      <div class="card">
+        <h2>📅 Programme annuel</h2>
+        <p>Planifiez les objectifs annuels et liez-les aux contrats actifs.</p>
+      </div>
+
+      <div class="card">
+        <h2>🗓️ Déclarations mensuelles</h2>
+        <p>Automatisez la génération des annexes 2 et 4.</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // --- Thème clair / sombre ---
+    function toggleTheme() {
+      document.body.dataset.theme =
+        document.body.dataset.theme === "dark" ? "" : "dark";
+    }
+
+    // --- Export PDF ---
+    function exportPDF() {
+      alert("Fonction d’export PDF en cours de développement...");
+    }
+  </script>
+</body>
+</html>
+

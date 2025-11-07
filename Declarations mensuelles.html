@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>MegaScierie | Déclarations Mensuelles</title>
+  <style>
+    :root {
+      --primary: #006d3b;
+      --secondary: #00a86b;
+      --light: #f5f8f6;
+      --white: #fff;
+      --dark: #222;
+      --gray: #666;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      background: var(--light);
+      height: 100vh;
+      color: var(--dark);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--primary);
+      color: var(--white);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      font-weight: 600;
+    }
+
+    .role {
+      background: var(--white);
+      color: var(--primary);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    /* ===== CONTAINER ===== */
+    .container {
+      display: flex;
+      flex: 1;
+      height: calc(100vh - 70px);
+    }
+
+    /* ===== SIDEBAR ===== */
+    nav {
+      width: 240px;
+      background: var(--primary);
+      color: var(--white);
+      padding-top: 2rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    nav li {
+      padding: 1rem 1.5rem;
+      cursor: pointer;
+      border-left: 4px solid transparent;
+      transition: 0.3s;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    nav li:hover,
+    nav li.active {
+      background: var(--secondary);
+      border-left: 4px solid var(--white);
+    }
+
+    /* ===== MAIN ===== */
+    main {
+      flex-grow: 1;
+      background: var(--white);
+      padding: 2rem 2.5rem;
+      border-top-left-radius: 20px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.05);
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .status-box {
+      background: var(--light);
+      border-left: 6px solid var(--secondary);
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 1rem;
+      color: var(--primary);
+      margin-bottom: 1.8rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    /* ===== REPORT CARDS ===== */
+    .report-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .report-card {
+      background: var(--light);
+      border-radius: 10px;
+      padding: 1.2rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: 0.3s;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      border: 1px solid transparent;
+      cursor: pointer;
+    }
+
+    .report-card:hover {
+      transform: translateY(-3px);
+      background: var(--white);
+      border-color: var(--secondary);
+    }
+
+    .report-card span {
+      font-weight: 500;
+      color: var(--primary);
+    }
+
+    .report-card i {
+      font-size: 1.6rem;
+      color: var(--secondary);
+    }
+
+    /* ===== BUTTONS ===== */
+    .action-buttons {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    button {
+      padding: 0.9rem 1.4rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+    }
+
+    .primary-btn {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    .primary-btn:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    .secondary-btn {
+      background: var(--white);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .secondary-btn:hover {
+      background: var(--light);
+      transform: translateY(-2px);
+    }
+
+    /* ===== ALERT ===== */
+    .alert {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: var(--secondary);
+      color: var(--white);
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+      font-weight: 500;
+    }
+
+    .alert.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== LOADER ===== */
+    .loader {
+      border: 3px solid #e0e0e0;
+      border-top: 3px solid var(--primary);
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      margin-left: 10px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>📄 Déclarations Mensuelles Automatiques</h1>
+    <div class="role">👤 Administrateur</div>
+  </header>
+
+  <div class="container">
+    <nav>
+      <ul>
+        <li>📅 Programme Annuel</li>
+        <li class="active">📊 Déclarations</li>
+        <li>📁 Rapports</li>
+        <li>⚙️ Paramètres</li>
+      </ul>
+    </nav>
+    
+
+    <main>
+      <div class="section-title">Génération des Rapports Officiels</div>
+      <div class="subtitle">Période : Octobre 2025</div>
+
+      <div class="status-box">
+        ✅ Les rapports ont été générés avec succès le <strong>29/10/2025 à 21h58</strong>.
+      </div>
+
+      <div class="report-list">
+        <div class="report-card" onclick="generateReport('Fiche Technique')"><span>🛠️ Fiche Technique</span><i>📄</i></div>
+        <div class="report-card" onclick="generateReport('Annexe 4 - Approvisionnement')"><span>🚚 Annexe 4 - Approvisionnement</span><i>📦</i></div>
+        <div class="report-card" onclick="generateReport('Annexe 2 - Destination Produits')"><span>📦 Annexe 2 - Destination Produits</span><i>📤</i></div>
+        <div class="report-card" onclick="generateReport('Export PDF')"><span>📤 Export PDF</span><i>🧾</i></div>
+      </div>
+
+      <div class="action-buttons">
+        <button class="primary-btn" onclick="showAlert('Tous les rapports ont été régénérés avec succès ✅')">🧾 Générer les rapports</button>
+        <button class="primary-btn" onclick="showAlert('Tous les fichiers PDF ont été téléchargés 📁')">📁 Télécharger tous les PDF</button>
+        <button class="secondary-btn" onclick="showAlert('Page actualisée 🔄')">🔄 Actualiser</button>
+        <button class="secondary-btn" onclick="window.history.back()">⬅️ Retour</button>
+      </div>
+
+      <div id="alertBox" class="alert"></div>
+    </main>
+  </div>
+
+  <script>
+    function showAlert(message) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.textContent = message;
+      alertBox.classList.add('show');
+      setTimeout(() => alertBox.classList.remove('show'), 3000);
+    }
+
+    function generateReport(name) {
+      const alertBox = document.getElementById('alertBox');
+      alertBox.innerHTML = `⏳ Génération du rapport <strong>${name}</strong> en cours... <div class="loader"></div>`;
+      alertBox.classList.add('show');
+      setTimeout(() => {
+        alertBox.innerHTML = `✅ Le rapport <strong>${name}</strong> a été généré avec succès !`;
+      }, 2500);
+      setTimeout(() => alertBox.classList.remove('show'), 5000);
+    }
+  </script>
+
+</body>
+</html>
