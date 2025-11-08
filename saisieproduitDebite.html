@@ -1,281 +1,259 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MegaScierie | Tableau de bord</title>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MegaScierie | Saisie produit débité</title>
   <style>
     :root {
       --primary: #006241;
       --secondary: #00a86b;
-      --accent: #cde8e0;
-      --bg-light: #f4f7f6;
+      --bg-light: #f6f8fa;
       --text-dark: #333;
       --white: #fff;
-      --shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
-
-    [data-theme="dark"] {
-      --primary: #00a86b;
-      --secondary: #007d4d;
-      --accent: #003b2a;
-      --bg-light: #181818;
-      --text-dark: #eaeaea;
-      --white: #222;
-      --shadow: 0 4px 14px rgba(255, 255, 255, 0.1);
-    }
-
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', sans-serif;
     }
-
     body {
       display: flex;
       background: var(--bg-light);
       color: var(--text-dark);
       height: 100vh;
-      transition: 0.3s;
+      overflow: hidden;
     }
-
-    /* ===== SIDEBAR ===== */
     .sidebar {
-      width: 260px;
+      width: 250px;
       background: var(--primary);
       color: var(--white);
       display: flex;
       flex-direction: column;
-      padding: 1.5rem 1rem;
+      padding: 1rem;
       overflow-y: auto;
-      box-shadow: var(--shadow);
+      scrollbar-width: thin;
+      scrollbar-color: var(--secondary) var(--primary);
     }
-
-    .logo {
+    .sidebar::-webkit-scrollbar { width: 6px; }
+    .sidebar::-webkit-scrollbar-thumb { background-color: var(--secondary); border-radius: 4px; }
+    .sidebar .logo {
+      font-size: 1.5rem;
       text-align: center;
-      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
       font-weight: bold;
-      margin-bottom: 2rem;
-      letter-spacing: 0.5px;
     }
-
-    nav ul {
+    .sidebar nav ul {
       list-style: none;
     }
-
-    nav ul li {
-      margin: 0.6rem 0;
+    .sidebar nav ul li {
+      margin: 0.5rem 0;
+      padding: 0.6rem 0.8rem;
       border-radius: 8px;
+      cursor: pointer;
       transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
-    nav ul li a {
-      color: var(--white);
-      text-decoration: none;
-      display: block;
-      padding: 0.8rem 1rem;
-      border-radius: 8px;
-      font-size: 0.95rem;
-    }
-
-    nav ul li:hover,
-    nav ul li.active {
+    .sidebar nav ul li:hover,
+    .sidebar nav ul li.active {
       background: var(--secondary);
     }
-
-    /* ===== MAIN ===== */
+    .sidebar nav ul li a {
+      color: white;
+      text-decoration: none;
+      flex: 1;
+    }
     .main {
       flex: 1;
       overflow-y: auto;
-      padding: 2rem;
+      padding: 1.5rem 2rem;
     }
-
     header {
-      background: var(--white);
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: var(--white);
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 1.5rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 { color: var(--primary); font-size: 1.5rem; }
+    header .user { font-weight: bold; color: var(--primary); }
+    .form-section {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
       margin-bottom: 2rem;
     }
-
-    header h1 {
+    .form-section h2 {
+      margin-bottom: 1rem;
       color: var(--primary);
-      font-size: 1.6rem;
     }
-
-    .controls button {
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    label {
+      font-weight: 600;
+      color: #444;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+    input, select {
+      padding: 0.6rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      width: 100%;
+      font-size: 0.95rem;
+    }
+    button {
+      grid-column: span 2;
       background: var(--primary);
       color: white;
       border: none;
-      padding: 0.7rem 1rem;
+      padding: 0.9rem;
       border-radius: 8px;
+      font-size: 1rem;
       cursor: pointer;
-      font-weight: 500;
-      margin-left: 0.5rem;
       transition: 0.3s;
+      margin-top: 1rem;
     }
-
-    .controls button:hover {
-      background: var(--secondary);
-    }
-
-    /* ===== CARDS ===== */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
+    button:hover { background: var(--secondary); }
+    .table-section {
       background: var(--white);
-      border-radius: 14px;
-      padding: 1.7rem;
-      box-shadow: var(--shadow);
-      transition: 0.3s ease-in-out;
-      cursor: pointer;
-      border-top: 4px solid var(--secondary);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
-
-    .card:hover {
-      transform: translateY(-6px);
-      background: var(--accent);
-    }
-
-    .card h2 {
+    .table-section h2 {
       color: var(--primary);
-      font-size: 1.2rem;
-      margin-bottom: 0.6rem;
+      margin-bottom: 1rem;
     }
-
-    .card p {
-      color: #555;
-      font-size: 0.95rem;
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
-
-    /* Scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
+    th, td {
+      padding: 0.8rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
     }
-    ::-webkit-scrollbar-thumb {
-      background: var(--secondary);
-      border-radius: 4px;
+    th {
+      background: var(--primary);
+      color: white;
     }
+    tr:hover { background: #f3f3f3; }
   </style>
 </head>
-
 <body>
-  <!-- ===== SIDEBAR ===== -->
   <aside class="sidebar">
     <h2 class="logo">🪵 MegaScierie</h2>
     <nav>
       <ul>
-        <li class="active"><a href="index.html">🏠 Tableau de bord</a></li>
-        <li><a href="saisie_grumes.html">🌲 Saisie de grumes</a></li>
-        <li><a href="transport_grumes.html">🚛 Transport de grumes</a></li>
-        <li><a href="transport_debites.html">🚚 Transport de débités</a></li>
-        <li><a href="production.html">🪚 Production</a></li>
+        <li><a href="dashboard.html">🏠 Tableau de bord</a></li>
+        <li><a href="saisie_grume.html">🌲 Saisie de grumes</a></li>
+        <li class="active">🪚 Saisie produit débité</li>
+        <li><a href="transport_grumes.html">🚚 Transport de grumes</a></li>
+        <li><a href="transport_debites.html">🚛 Transport de débités</a></li>
+        <li><a href="production.html">🏭 Production scierie</a></li>
         <li><a href="stocks.html">📦 Stocks</a></li>
         <li><a href="facturation.html">💰 Facturation</a></li>
-        <li><a href="rapports.html">📊 Rapports</a></li>
-        <li><a href="lettres.html">📄 Lettres automatiques</a></li>
-        <li><a href="ordres_transit.html">🚦 Ordres de transit</a></li>
-        <li><a href="contrats.html">🧾 Contrats</a></li>
-        <li><a href="programme.html">📅 Programme annuel</a></li>
-        <li><a href="declarations.html">🗓️ Déclarations mensuelles</a></li>
+        <li><a href="rapports.html">📄 Rapports</a></li>
+        <li><a href="lettres.html">📑 Lettres automatiques</a></li>
+        <li><a href="transit.html">🚦 Ordres de transit</a></li>
+        <li><a href="contrats.html">📜 Contrats & parcelles</a></li>
+        <li><a href="programme.html">📆 Programme annuel</a></li>
+        <li><a href="declarations.html">🧾 Déclarations mensuelles</a></li>
         <li><a href="parametres.html">⚙️ Paramètres</a></li>
       </ul>
     </nav>
   </aside>
-
-  <!-- ===== MAIN CONTENT ===== -->
   <section class="main">
     <header>
-      <h1>🏠 Tableau de bord</h1>
-      <div class="controls">
-        <button onclick="exportPDF()">📤 Exporter PDF</button>
-        <button onclick="toggleTheme()">🌗 Mode clair/sombre</button>
-      </div>
+      <h1>🪚 Saisie produit débité</h1>
+      <p class="user">👤 Administrateur</p>
     </header>
-
-    <div class="cards">
-      <div class="card">
-        <h2>🌲 Saisie de grumes</h2>
-        <p>Suivez le nombre total de grumes enregistrées et leur état de traitement.</p>
-      </div>
-
-      <div class="card">
-        <h2>🚛 Transport de grumes</h2>
-        <p>Consultez les détails des grumes en transit entre les sites.</p>
-      </div>
-
-      <div class="card">
-        <h2>🪚 Production scierie</h2>
-        <p>Analysez les volumes débités et la performance de la scierie.</p>
-      </div>
-
-      <div class="card">
-        <h2>📦 Gestion des stocks</h2>
-        <p>Visualisez les niveaux de stock des grumes, débités et produits finis.</p>
-      </div>
-
-      <div class="card">
-        <h2>💰 Facturation clients</h2>
-        <p>Suivez les paiements, soldes et factures en attente.</p>
-      </div>
-
-      <div class="card">
-        <h2>📊 Rapports & statistiques</h2>
-        <p>Générez des rapports mensuels et de production personnalisés.</p>
-      </div>
-
-      <div class="card">
-        <h2>📄 Lettres automatiques</h2>
-        <p>Créez et envoyez automatiquement les documents administratifs.</p>
-      </div>
-
-      <div class="card">
-        <h2>🚦 Ordres de transit</h2>
-        <p>Suivez et gérez les ordres de transit pour les lots expédiés.</p>
-      </div>
-
-      <div class="card">
-        <h2>🧾 Contrats</h2>
-        <p>Gérez les contrats clients et les clauses de production.</p>
-      </div>
-
-      <div class="card">
-        <h2>📅 Programme annuel</h2>
-        <p>Planifiez les objectifs annuels et liez-les aux contrats actifs.</p>
-      </div>
-
-      <div class="card">
-        <h2>🗓️ Déclarations mensuelles</h2>
-        <p>Automatisez la génération des annexes 2 et 4.</p>
-      </div>
-
-      <!-- ✅ Nouvelle carte Produit Débité -->
-      <div class="card">
-        <h2>🪵 Produit Débité</h2>
-        <p>Consultez les informations détaillées sur les produits débités, leurs dimensions, volumes et types de transformation effectuée.</p>
-      </div>
-
+    <div class="form-section">
+      <h2>Nouveau produit débité</h2>
+      <form method="post" action="saisieProduitDebite.php">
+        <div>
+          <label>Type de produit</label>
+          <input type="text" name="type_produit" required>
+        </div>
+        <div>
+          <label>Volume (m³)</label>
+          <input type="number" step="0.01" name="volume" required>
+        </div>
+        <div>
+          <label>Section</label>
+          <input type="text" name="section" required>
+        </div>
+        <div>
+          <label>Date de débit</label>
+          <input type="date" name="date_debit" required>
+        </div>
+        <div>
+          <label>Longueur (m)</label>
+          <input type="number" step="0.01" name="longueur" required>
+        </div>
+        <div>
+          <label>Destination</label>
+          <select name="destination" required>
+            <option value="stock">Stock</option>
+            <option value="client">Client</option>
+            <option value="production">Production</option>
+          </select>
+        </div>
+        <div>
+          <label>Qualité</label>
+          <input type="text" name="qualite">
+        </div>
+        <div>
+          <label>ID grume source</label>
+          <input type="number" name="id_grume_source">
+        </div>
+        <div>
+          <label>ID production</label>
+          <input type="number" name="id_production">
+        </div>
+        <button type="submit">✅ Enregistrer le produit</button>
+      </form>
+    </div>
+    <div class="table-section">
+      <h2>📋 Produits débités enregistrés</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>Type</th><th>Volume</th><th>Section</th><th>Date</th><th>Longueur</th>
+            <th>Destination</th><th>Qualité</th><th>Grume</th><th>Production</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <tr>
+            <td>1</td>
+            <td>Planche</td>
+            <td>1.25</td>
+            <td>20x250</td>
+            <td>2025-10-18</td>
+            <td>5.70</td>
+            <td>Stock</td>
+            <td>A</td>
+            <td>1</td>
+            <td>1</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
-
-  <script>
-    function toggleTheme() {
-      document.body.dataset.theme =
-        document.body.dataset.theme === "dark" ? "" : "dark";
-    }
-
-    function exportPDF() {
-      alert("Fonction d’export PDF en cours de développement...");
-    }
-  </script>
 </body>
 </html>
